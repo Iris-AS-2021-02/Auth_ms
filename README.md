@@ -4,7 +4,7 @@ To run use
 ```
 docker build -t auth_ms .
 docker run -d -P -p 8080 auth_ms
-``
+```
 user the port used by the machine.
 ```
 docker ps
