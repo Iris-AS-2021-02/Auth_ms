@@ -9,7 +9,4 @@ RUN go build -o auth
 RUN chmod +777 auth
 RUN export GIN_MODE=release
 
-EXPOSE 8080
-
 CMD ["./auth"]
-
