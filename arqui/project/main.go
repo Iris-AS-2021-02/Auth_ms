@@ -8,6 +8,7 @@ import (
 
 func main() {
 
+	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.POST("/user", c.PostUser)
 	router.GET("/user/number/:number", c.GetUserByNumber)
