@@ -29,20 +29,43 @@ func createUser(user *User) (primitive.ObjectID, error) {
 	return oid, nil
 }
 
-func findUserByID(id primitive.ObjectID) (*User, error) {
+func findUsers() ([]*User, error) {
+	var users []*User
+
+	client, ctx, cancel := getConnection()
+	defer cancel()
+	defer client.Disconnect(ctx)
+	db := client.Database("auth_db")
+	collection := db.Collection("user")
+	cursor, err := collection.Find(ctx, bson.D{})
+	if err != nil {
+		return nil, err
+	}
+	defer cursor.Close(ctx)
+	err = cursor.All(ctx, &users)
+	if err != nil {
+		log.Printf("Failed marshalling %v", err)
+		return nil, err
+	}
+
+	return users, nil
+}
+
+func findUserByNumber(userNumber string) (*User, error) {
 	var user *User
 
 	client, ctx, cancel := getConnection()
 	defer cancel()
 	defer client.Disconnect(ctx)
-
 	db := client.Database("auth_db")
 	collection := db.Collection("user")
+	filter := bson.D{{Key: "number", Value: userNumber}}
 
-	result := collection.FindOne(ctx, bson.D{})
+	result := collection.FindOne(ctx, filter)
 	if result == nil {
-		return nil, errors.New("Could not find user")
+		return nil, errors.New("Could not find a user")
 	}
+
 	err := result.Decode(&user)
 
 	if err != nil {
