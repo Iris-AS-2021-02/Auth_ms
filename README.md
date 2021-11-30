@@ -15,15 +15,7 @@ In this case you should use ```localhost:51620```
 
 ## Endpoints
 
-Post User.
-```user```
-
-Get User.
-
-```/user```
-Get User by number.
-
-```//user/number```
-Get Users with number.
-
-```/user/find/number1,number2,...,numbern```
+Post User: ```user``` \
+Get User:```/user```
+Get User by number:```//user/number```\
+Get Users with number:```/user/find/number1,number2,...,numbern```\
