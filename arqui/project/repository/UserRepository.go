@@ -5,7 +5,6 @@ import (
 	u "arqui/project/model"
 	"errors"
 	"log"
-
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -76,4 +75,39 @@ func FindUserByNumber(userNumber string) (*u.User, error) {
 	}
 	log.Printf("Tasks: %v", user)
 	return user, nil
+}
+
+func FindUsersWithNumber(numbers string) ([]*u.User, error) { 
+	users, err := FindUsers()
+	if err != nil {
+		return nil, err
+	}
+	inNumbers := map[string]int {
+		"dummy" : 1,
+	}
+	i := 0
+	cur := ""
+	for i < len(numbers) {
+		if (numbers[i] == ',') {
+			inNumbers[cur] = 1;
+			cur = ""
+		} else {
+			cur += string(numbers[i])
+		}
+		i += 1
+	}
+	
+	if cur != "" {
+		inNumbers[cur] = 1
+	}
+	
+	var valUsers []*u.User
+	i = 0
+	for i < len(users) {
+		if (inNumbers[users[i].Number] != 0) {
+			valUsers = append(valUsers, users[i])
+		}
+		i += 1
+	}
+	return valUsers, nil
 }
