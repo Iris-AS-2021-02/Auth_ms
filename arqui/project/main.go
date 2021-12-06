@@ -14,5 +14,5 @@ func main() {
 	router.GET("/user/:number", c.GetUserByNumber)
 	router.GET("/user", c.GetUsers)
 	router.GET("/user/find/:numbers", c.GetUsersWithNumber)
-	router.Run("0.0.0.0:8080")
+	router.Run("0.0.0.0:1024")
 }

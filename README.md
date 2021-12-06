@@ -5,7 +5,7 @@ To run use
 docker build -t auth_ms .
 docker run -d -P -p 8080:8080  auth_ms
 ```
-In this case you should use ```localhost:8080```
+In this case you should use ```localhost:1024```
 
 ## Endpoints
 
