@@ -20,7 +20,8 @@ func PostUser(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"msg": err})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"id": id})
+	_ = id
+	c.JSON(http.StatusOK, user)
 }
 
 func GetUsers(c *gin.Context) {
@@ -29,7 +30,8 @@ func GetUsers(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"msg": err})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"users": loadedUsers})
+	c.JSON(http.StatusOK, loadedUsers);
+	//c.JSON(http.StatusOK, gin.H{"users": loadedUsers})
 }
 
 func GetUserByNumber(c *gin.Context) {
@@ -40,7 +42,7 @@ func GetUserByNumber(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"msg": err})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"ID": loadedUser.ID, "Name": loadedUser.Name})
+	c.JSON(http.StatusOK, loadedUser)
 }
 
 func GetUsersWithNumber(c *gin.Context) {
@@ -51,5 +53,5 @@ func GetUsersWithNumber(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"msg": err})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"users": loadedUsers})
+	c.JSON(http.StatusOK, loadedUsers);
 }
