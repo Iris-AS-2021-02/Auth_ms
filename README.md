@@ -3,7 +3,7 @@
 To run use
 ```
 docker build -t auth_ms .
-docker run -d -P -p 8080:8080  auth_ms
+docker run -d -P -p 1024:1024  auth_ms
 ```
 In this case you should use ```localhost:1024```
 
