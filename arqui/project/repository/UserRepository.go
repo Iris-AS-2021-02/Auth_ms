@@ -17,7 +17,7 @@ func CreateUser(user *u.User) (primitive.ObjectID, error) {
 
 	defer cancel()
 	defer client.Disconnect(ctx)
-	user.ID = primitive.NewObjectID()
+	user.ID = primitive.NewObjectID().String()
 
 	result, err := client.Database("auth_db").Collection("user").InsertOne(ctx, user)
 
