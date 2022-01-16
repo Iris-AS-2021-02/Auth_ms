@@ -6,4 +6,5 @@ type User struct {
 	ID     string  `bson:"id,omitempty"`
 	Name   string             `bson:"name,omitempty"`
 	Number string             `bson:"number,omitempty"`
+	Password string             `bson:"password,omitempty"`
 }
