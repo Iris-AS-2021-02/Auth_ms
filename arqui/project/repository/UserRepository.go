@@ -12,32 +12,38 @@ import (
 //creates user
 func CreateUser(user *u.User) (primitive.ObjectID, error) {
 	//var newUser User
-	client, ctx, cancel := d.GetConnection()
+	client, client2, ctx, cancel := d.GetConnection()
 	defer cancel()
 
 	defer cancel()
 	defer client.Disconnect(ctx)
+	defer client2.Disconnect(ctx)
 	user.ID = primitive.NewObjectID().Hex()
 	result, err := client.Database("auth_db").Collection("user").InsertOne(ctx, user)
-
+	result2, err2 := client2.Database("auth_db").Collection("user").InsertOne(ctx, user)
 	if err != nil {
 		log.Printf("Could not create user: %v", err)
 		return primitive.NilObjectID, err
 	}
 	//object id
 	oid := result.InsertedID.(primitive.ObjectID)
+	oid2 := result2.InsertID.(primitive.ObjectID)
 	return oid, nil
 }
 
 func FindUsers() ([]*u.User, error) {
 	var users []*u.User
 
-	client, ctx, cancel := d.GetConnection()
+	client, client2, ctx, cancel := d.GetConnection()
 	defer cancel()
 	defer client.Disconnect(ctx)
+	defer client2.Disconnect(ctx)
 	db := client.Database("auth_db")
+	db2 := client.Database("auth_db")
 	collection := db.Collection("user")
+	collection2 := db2.Collection("user")
 	cursor, err := collection.Find(ctx, bson.D{})
+	cursor2, err2 := collection2.Find(ctx, bson.D{})
 	if err != nil {
 		return nil, err
 	}
@@ -54,14 +60,18 @@ func FindUsers() ([]*u.User, error) {
 func FindUserByNumber(userNumber string) (*u.User, error) {
 	var user *u.User
 
-	client, ctx, cancel := d.GetConnection()
+	client, client2, ctx, cancel := d.GetConnection()
 	defer cancel()
 	defer client.Disconnect(ctx)
+	defer client2.Disconnect(ctx)
 	db := client.Database("auth_db")
+	db2 := client2.Database("auth_db")
 	collection := db.Collection("user")
+	collection2 := db2.Collection("user")
 	filter := bson.D{{Key: "number", Value: userNumber}}
 
 	result := collection.FindOne(ctx, filter)
+	resul2 := collection2.FindOne(ctx, filter)
 	if result == nil {
 		return nil, errors.New("Could not find a user")
 	}
