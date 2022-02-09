@@ -15,7 +15,7 @@ const (
 	connectTimeout           = 5
 	connectionStringTemplate = "mongodb://%s:%s@%s"
 	uri                      = "mongodb+srv://root:2021@cluster0.34iec.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-	uri2 = "mongodb+srv://admin:123@cluster0.cau4c.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+	uri2 = 						"mongodb+srv://root:2021@cluster0.34iec.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 )
 
 func GetConnection() (*mongo.Client, context.Context, context.CancelFunc) {
