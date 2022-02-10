@@ -88,7 +88,7 @@ func FindUserByNumber(userNumber string) (*u.User, error) {
 	if result == nil {
 		return nil, errors.New("Could not find a user")
 	}
-	if resul2 == nil {
+	if result2 == nil {
 		return nil, errors.New("Could not find a user")
 	}
 	err := result.Decode(&user)
@@ -99,7 +99,7 @@ func FindUserByNumber(userNumber string) (*u.User, error) {
 	}
 	if err2 != nil {
 		log.Printf("Failed marshalling %v", err2)
-		return nil, err
+		return nil, err2
 	}
 	log.Printf("Tasks: %v", user)
 	return user, nil
