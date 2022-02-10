@@ -25,9 +25,14 @@ func CreateUser(user *u.User) (primitive.ObjectID, error) {
 		log.Printf("Could not create user: %v", err)
 		return primitive.NilObjectID, err
 	}
+	if err2 != nil {
+		log.Printf("Could not create user: %v", err)
+		return primitive.NilObjectID, err
+	}
 	//object id
 	oid := result.InsertedID.(primitive.ObjectID)
 	oid2 := result2.InsertedID.(primitive.ObjectID)
+	log.Printf("Could create user: %v", oid2)
 	return oid, nil
 }
 
