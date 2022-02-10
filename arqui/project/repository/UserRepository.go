@@ -27,7 +27,7 @@ func CreateUser(user *u.User) (primitive.ObjectID, error) {
 	}
 	//object id
 	oid := result.InsertedID.(primitive.ObjectID)
-	oid2 := result2.InsertID.(primitive.ObjectID)
+	oid2 := result2.InsertedID.(primitive.ObjectID)
 	return oid, nil
 }
 
