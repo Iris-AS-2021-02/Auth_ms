@@ -84,7 +84,7 @@ func FindUserByNumber(userNumber string) (*u.User, error) {
 	filter := bson.D{{Key: "number", Value: userNumber}}
 
 	result := collection.FindOne(ctx, filter)
-	resul2 := collection2.FindOne(ctx, filter)
+	result2 := collection2.FindOne(ctx, filter)
 	if result == nil {
 		return nil, errors.New("Could not find a user")
 	}
