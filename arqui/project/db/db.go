@@ -18,7 +18,7 @@ const (
 	uri2 = 						"mongodb+srv://root:2021@cluster0.34iec.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 )
 
-func GetConnection() (*mongo.Client, context.Context, context.CancelFunc) {
+func GetConnection() (*mongo.Client, *mongo.Client, context.Context, context.CancelFunc) {
 	// Create a new client and connect to the server
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	client2, err2 := mongo.NewClient(options.Client().ApplyURI(uri2))
