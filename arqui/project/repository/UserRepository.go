@@ -12,15 +12,13 @@ import (
 //creates user
 func CreateUser(user *u.User) (primitive.ObjectID, error) {
 	//var newUser User
-	client, client2, ctx, cancel := d.GetConnection()
+	client,ctx, cancel := d.GetConnection()
 	defer cancel()
-
 	defer cancel()
 	defer client.Disconnect(ctx)
-	defer client2.Disconnect(ctx)
 	user.ID = primitive.NewObjectID().Hex()
 	result, err := client.Database("auth_db").Collection("user").InsertOne(ctx, user)
-	result2, err2 := client2.Database("auth_db_2").Collection("user").InsertOne(ctx, user)
+	result2, err2 := client.Database("auth_db_2").Collection("user").InsertOne(ctx, user)
 	if err != nil {
 		log.Printf("Could not create user: %v", err)
 		return primitive.NilObjectID, err
@@ -42,7 +40,6 @@ func FindUsers() ([]*u.User, error) {
 	client, client2, ctx, cancel := d.GetConnection()
 	defer cancel()
 	defer client.Disconnect(ctx)
-	defer client2.Disconnect(ctx)
 	db := client.Database("auth_db")
 	db2 := client.Database("auth_db_2")
 	collection := db.Collection("user")
@@ -73,18 +70,17 @@ func FindUsers() ([]*u.User, error) {
 func FindUserByNumber(userNumber string) (*u.User, error) {
 	var user *u.User
 
-	client, client2, ctx, cancel := d.GetConnection()
+	client,ctx, cancel := d.GetConnection()
 	defer cancel()
 	defer client.Disconnect(ctx)
-	defer client2.Disconnect(ctx)
 	db := client.Database("auth_db")
-	db2 := client2.Database("auth_db_2")
+	db2 := client.Database("auth_db_2")
 	collection := db.Collection("user")
 	collection2 := db2.Collection("user")
 	filter := bson.D{{Key: "number", Value: userNumber}}
 
 	result := collection.FindOne(ctx, filter)
-	result2 := collection2.FindOne(ctx, filter)
+	result2 := collection.FindOne(ctx, filter)
 	if result == nil {
 		return nil, errors.New("Could not find a user")
 	}
