@@ -52,13 +52,21 @@ func FindUsers() ([]*u.User, error) {
 	if err != nil {
 		return nil, err
 	}
+	if err2 != nil {
+		return nil, err2
+	}
 	defer cursor.Close(ctx)
+	defer cursor2.Close(ctx)
 	err = cursor.All(ctx, &users)
+	err2 = cursor2.All(ctx, &users)
 	if err != nil {
 		log.Printf("Failed marshalling %v", err)
 		return nil, err
 	}
-
+	if err2 != nil {
+		log.Printf("Failed marshalling %v", err2)
+		return nil, err
+	}
 	return users, nil
 }
 
