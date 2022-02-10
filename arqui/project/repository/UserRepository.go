@@ -37,7 +37,7 @@ func CreateUser(user *u.User) (primitive.ObjectID, error) {
 func FindUsers() ([]*u.User, error) {
 	var users []*u.User
 
-	client, client2, ctx, cancel := d.GetConnection()
+	client,ctx, cancel := d.GetConnection()
 	defer cancel()
 	defer client.Disconnect(ctx)
 	db := client.Database("auth_db")
@@ -80,7 +80,7 @@ func FindUserByNumber(userNumber string) (*u.User, error) {
 	filter := bson.D{{Key: "number", Value: userNumber}}
 
 	result := collection.FindOne(ctx, filter)
-	result2 := collection.FindOne(ctx, filter)
+	result2 := collection2.FindOne(ctx, filter)
 	if result == nil {
 		return nil, errors.New("Could not find a user")
 	}
