@@ -15,17 +15,15 @@ const (
 	connectTimeout           = 5
 	connectionStringTemplate = "mongodb://%s:%s@%s"
 	uri                      = "mongodb+srv://root:2021@cluster0.34iec.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-	uri2 = 						"mongodb+srv://root:2021@cluster0.34iec.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+	uri2                     = "mongodb+srv://root:2021@cluster0.34iec.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 )
 
-func GetConnection() (*mongo.Client, *mongo.Client, context.Context, context.CancelFunc) {
+func GetConnection(url string) (*mongo.Client, context.Context, context.CancelFunc) {
 	// Create a new client and connect to the server
-	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
-	client2, err2 := mongo.NewClient(options.Client().ApplyURI(uri2))
+	client, err := mongo.NewClient(options.Client().ApplyURI(url))
 	if err != nil {
 		log.Printf("Failed to create client: %v", err)
 	}
-
 
 	ctx, cancel := context.WithTimeout(context.Background(), connectTimeout*time.Second)
 
@@ -36,14 +34,10 @@ func GetConnection() (*mongo.Client, *mongo.Client, context.Context, context.Can
 
 	// Force a connection to verify our connection string
 	err = client.Ping(ctx, nil)
-	err2 = client2.Ping(ctx,nil)
 	if err != nil {
 		log.Printf("Failed to ping cluster: %v", err)
 	}
-	if err2 != nil {
-		log.Printf("Failed to ping cluster: %v", err2)
-	}
 
 	fmt.Println("Connected to MongoDB!")
-	return client, client2, ctx, cancel
+	return client, ctx, cancel
 }
