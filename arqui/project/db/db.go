@@ -26,9 +26,6 @@ func GetConnection() (*mongo.Client, *mongo.Client, context.Context, context.Can
 		log.Printf("Failed to create client: %v", err)
 	}
 
-	if err2 != nil {
-		log.printf("Failed to create client: %v",err2)
-	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), connectTimeout*time.Second)
 
